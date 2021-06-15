@@ -4,16 +4,15 @@
   "description": "express js server for tracking your own money spending",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "server": "nodemon ."
   },
   "keywords": [
     "back-end",
     "node",
     "express",
     "js",
-    "javascript",
-    "ts",
-    "typecript"
+    "javascript"
   ],
   "author": "Andrey Zhygarev",
   "license": "ISC",
