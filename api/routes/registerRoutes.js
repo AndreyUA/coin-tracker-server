@@ -10,7 +10,7 @@ const Family = require("../../data/models/Family");
 // Creating router
 const router = Router();
 
-// @route       POST api/family
+// @route       POST api/register
 // @desc        Create new family account
 // @access      Public
 router.post(
