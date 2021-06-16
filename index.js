@@ -6,13 +6,14 @@ const connectDB = require("./config/db");
 
 const app = express();
 connectDB();
-routes(app);
 
+// middleware for req.body
 app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send("api is running!!!");
 });
+routes(app);
 
 const PORT = process.env.PORT || 5000;
 

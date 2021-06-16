@@ -2,20 +2,22 @@ const { Router } = require("express");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 
 // Models
 const Family = require("../../data/models/Family");
 
+// Creating router
 const router = Router();
 
-// @route       POST api/family/id
+// @route       POST api/family
 // @desc        Create new family account
 // @access      Public
 router.post(
   "/",
   [
     check("familyName", "Family name is required").not().isEmpty(),
-    check("email", "Email name is required").isEmail(),
+    check("email", "Correct email is required").isEmail(),
     check(
       "password",
       "Please enter a password with 6 or more charecters"
@@ -27,9 +29,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
-    // TODO: familyName, email, password
-    // WHERE IS IT????
 
     const { familyName, email, password } = req.body;
 
@@ -48,7 +47,7 @@ router.post(
         password,
       });
 
-      const salt = await bcrypt.genSalt(42);
+      const salt = await bcrypt.genSalt(10);
       family.password = await bcrypt.hash(password, salt);
 
       await family.save();
