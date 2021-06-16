@@ -1,10 +1,12 @@
 const express = require("express");
 const path = require("path");
 
+const routes = require("./api/routes/index");
 const connectDB = require("./config/db");
 
 const app = express();
 connectDB();
+routes(app);
 
 app.use(express.json({ extended: false }));
 
