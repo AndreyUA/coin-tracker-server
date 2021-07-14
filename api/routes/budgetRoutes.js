@@ -24,7 +24,7 @@ router.post(
     const { total } = req.body;
 
     try {
-      const budget = new Budget({ total });
+      const budget = new Budget({ total, family: req.family.id });
 
       await budget.save();
 
@@ -37,13 +37,34 @@ router.post(
   }
 );
 
-// @route       GET api/budget
+// @route       GET api/budget/all
+// @desc        Get all budgets for current family
+// @access      Private
+router.get("/all", authMiddleware, async (req, res) => {
+  try {
+    const budgets = await (
+      await Budget.find()
+    ).filter((budget) => budget.family.toString() === req.family.id.toString());
+
+    if (!budgets || budgets.length === 0)
+      return res.status(404).json({ msg: "Bugets not found" });
+
+    res.send(budgets);
+  } catch (error) {
+    console.log(error.message);
+
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route       GET api/budget/:id
 // @desc        Get budget y id
 // @access      Private
 router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const budget = await Budget.findById(req.params.id);
 
+    // TODO: failed if id not correct!
     if (!budget) return res.status(400).json({ msg: "Budget not found" });
 
     res.send(budget);

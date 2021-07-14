@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 
 const BudgetScema = new mongoose.Schema({
-  // TODO: add id of creator
-
+  family: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "families",
+    required: true,
+  },
   total: {
     type: Number,
     required: true,
