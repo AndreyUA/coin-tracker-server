@@ -58,18 +58,21 @@ router.get("/all", authMiddleware, async (req, res) => {
 });
 
 // @route       GET api/budget/:id
-// @desc        Get budget y id
+// @desc        Get budget by id
 // @access      Private
 router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const budget = await Budget.findById(req.params.id);
 
-    // TODO: failed if id not correct!
     if (!budget) return res.status(400).json({ msg: "Budget not found" });
 
     res.send(budget);
   } catch (error) {
     console.log(error.message);
+
+    if (error.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Budget not found" });
+    }
 
     res.status(500).send("Server Error");
   }
