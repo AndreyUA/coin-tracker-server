@@ -16,7 +16,18 @@ const FamilySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // TODO: add person!!!
+  persons: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,

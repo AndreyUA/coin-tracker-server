@@ -12,8 +12,7 @@ const router = Router();
 // @access      Private
 router.post(
   "/",
-  authMiddleware,
-  [check("total", "Enter correct summ").isNumeric()],
+  [authMiddleware, check("total", "Enter correct summ").isNumeric()],
   async (req, res) => {
     const errors = validationResult(req);
 
