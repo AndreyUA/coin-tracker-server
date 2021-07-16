@@ -20,7 +20,10 @@ const BudgetScema = new mongoose.Schema({
   },
   transactions: [
     {
-      // TODO: add person!!!
+      person: {
+        type: String,
+        required: true,
+      },
       money: {
         type: Number,
         required: true,

@@ -25,11 +25,10 @@ router.patch(
     try {
       const family = await Family.findById(req.family.id).select("-password");
 
-      if (family.persons.find((person) => person.name === name)) {
+      if (family.persons.find((person) => person.name === name))
         return res
           .status(400)
           .json({ errors: [{ msg: "This person already exists" }] });
-      }
 
       const newPerson = {
         name,
