@@ -20,12 +20,16 @@ router.patch(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    // TODO: check if this name already exist
-
     const { name } = req.body;
 
     try {
       const family = await Family.findById(req.family.id).select("-password");
+
+      if (family.persons.find((person) => person.name === name)) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "This person already exists" }] });
+      }
 
       const newPerson = {
         name,
@@ -36,7 +40,10 @@ router.patch(
       await family.save();
 
       res.json(family);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Server error");
+    }
   }
 );
 
