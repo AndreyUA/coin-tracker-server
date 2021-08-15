@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 
 const routes = require("./api/routes/index");
 const connectDB = require("./config/db");
@@ -13,14 +14,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 // CORS for requests
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+app.use(cors());
 
 // Routes
 app.get("/", (req, res) => {
