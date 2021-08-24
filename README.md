@@ -61,6 +61,7 @@ By default localy server is running on http://localhost:5000/.
 
     json example:
     {
+        "name": "Test name",
         "total": 20000
     }
 
@@ -72,7 +73,7 @@ By default localy server is running on http://localhost:5000/.
     headers example:
     "x-auth-token": "someValidJWT"
 
-    response: array of all IDs of budgets for current family;
+    response: array of budgets objects for current family with ID and NAME.
 
 ### /api/budget/:id (GET):
     get budget by id;

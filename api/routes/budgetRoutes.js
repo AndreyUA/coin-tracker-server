@@ -12,7 +12,11 @@ const router = Router();
 // @access      Private
 router.post(
   "/",
-  [authMiddleware, check("total", "Enter correct summ").isNumeric()],
+  [
+    check("name", "Budget name is required").not().isEmpty(),
+    check("total", "Enter correct summ").isNumeric(),
+    authMiddleware,
+  ],
   async (req, res) => {
     const errors = validationResult(req);
 
@@ -20,10 +24,10 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { total } = req.body;
+    const { name, total } = req.body;
 
     try {
-      const budget = new Budget({ total, family: req.family.id });
+      const budget = new Budget({ name, total, family: req.family.id });
 
       await budget.save();
 
@@ -48,7 +52,10 @@ router.get("/all", authMiddleware, async (req, res) => {
     if (!budgets || budgets.length === 0)
       return res.status(404).json({ msg: "Bugets not found" });
 
-    const result = budgets.map((budget) => budget._id);
+    const result = budgets.map((budget) => ({
+      id: budget._id,
+      name: budget.name,
+    }));
 
     res.send(result);
   } catch (error) {

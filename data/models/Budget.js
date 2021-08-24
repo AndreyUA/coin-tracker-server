@@ -18,6 +18,10 @@ const BudgetScema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  name: {
+    type: String,
+    require: true,
+  },
   transactions: [
     {
       person: {
