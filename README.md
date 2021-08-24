@@ -67,12 +67,12 @@ By default localy server is running on http://localhost:5000/.
     response: budget object.
 
 ### /api/budget/all (GET):
-    get all budgets for current family;
+    get all IDs of budgets for current family;
 
     headers example:
     "x-auth-token": "someValidJWT"
 
-    response: array of all budgets for current family;
+    response: array of all IDs of budgets for current family;
 
 ### /api/budget/:id (GET):
     get budget by id;

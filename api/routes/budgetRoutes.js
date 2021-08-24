@@ -37,7 +37,7 @@ router.post(
 );
 
 // @route       GET api/budget/all
-// @desc        Get all budgets for current family
+// @desc        Get all IDs of budgets for current family
 // @access      Private
 router.get("/all", authMiddleware, async (req, res) => {
   try {
@@ -48,7 +48,9 @@ router.get("/all", authMiddleware, async (req, res) => {
     if (!budgets || budgets.length === 0)
       return res.status(404).json({ msg: "Bugets not found" });
 
-    res.send(budgets);
+    const result = budgets.map((budget) => budget._id);
+
+    res.send(result);
   } catch (error) {
     console.log(error.message);
 
