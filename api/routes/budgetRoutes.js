@@ -107,6 +107,7 @@ router.patch(
   [
     check("money", "Enter Correct summ").isNumeric(),
     check("name", "Person name is required").not().isEmpty(),
+    check("purchase", "Purchase is required").not().isEmpty(),
     authMiddleware,
   ],
   async (req, res) => {
@@ -115,7 +116,7 @@ router.patch(
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
 
-    const { money, name } = req.body;
+    const { money, name, purchase } = req.body;
 
     try {
       const budget = await Budget.findById(req.params.id);
@@ -128,7 +129,7 @@ router.patch(
         return res.status(401).json({ msg: "Token is not valid" });
 
       if (family.persons.find((person) => person.name === name)) {
-        budget.transactions.push({ person: name, money });
+        budget.transactions.push({ person: name, money, purchase });
 
         await budget.save();
 

@@ -92,7 +92,8 @@ By default localy server is running on http://localhost:5000/.
     json example:
     {
         "money": 1000,
-        "name": "Test person"
+        "name": "Test person",
+        "purchase": "meat"
     }
 
     response: budget object.

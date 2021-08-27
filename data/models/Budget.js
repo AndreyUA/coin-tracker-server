@@ -28,6 +28,10 @@ const BudgetScema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      purchase: {
+        type: String,
+        required: true,
+      },
       money: {
         type: Number,
         required: true,
