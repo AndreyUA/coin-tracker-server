@@ -98,4 +98,26 @@ By default localy server is running on http://localhost:5000/.
 
     response: budget object.
 
+### /api/post (POST)
+    add new post;
+
+    headers example:
+    "x-auth-token": "someValidJWT"
+
+    json example:
+    {
+        "name": "Test person",
+        "text": "Some test text"
+    }
+
+    response: post object.
+
+### /api/post/all (GET)
+    get all posts;
+
+    headers example:
+    "x-auth-token": "someValidJWT"
+
+    response: array of posts objects.
+
 ### to be continued...
