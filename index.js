@@ -1,9 +1,13 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 const routes = require("./api/routes/index");
 const connectDB = require("./config/db");
+
+// Apply .env
+dotenv.config();
 
 // Create app
 const app = express();
@@ -23,7 +27,7 @@ app.get("/", (req, res) => {
 routes(app);
 
 // Server port number
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 // Start
 app.listen(PORT, (req, res) => {

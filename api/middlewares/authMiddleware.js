@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 // middleware for token check
 module.exports = function (req, res, next) {
@@ -13,7 +12,7 @@ module.exports = function (req, res, next) {
 
   //verify token
   try {
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.family = decoded.family;
 
