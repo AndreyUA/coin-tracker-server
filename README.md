@@ -112,6 +112,14 @@ By default localy server is running on http://localhost:5000/.
 
     response: post object.
 
+### /api/post/:id (DELETE)
+    delete post;
+
+    headers example:
+    "x-auth-token": "someValidJWT"
+
+    response: array of posts objects.
+
 ### /api/post/all (GET)
     get all posts;
 
