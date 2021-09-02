@@ -40,14 +40,19 @@ const socketIo = io(server, {
 });
 
 socketIo.on("connection", (socket) => {
-  console.log("new client connected");
+  console.log("new client connected, id:", socket.id);
 
   socket.on("disconnect", () => {
     console.log("client disconnected");
   });
 
-  socket.on("sendPost", (msg) => {
-    // TODO: add logic for extract message from DB and send it to CORRECT user
-    socketIo.emit("receivePost", `server: ${JSON.stringify(msg)}`);
+  // Join to family room
+  socket.on('join_family_channel', (roomId) => {
+    socket.join(roomId);
+  });
+
+  // Send private post to your room
+  socket.on("sendPost", (familyId, msg) => {
+    socket.to(familyId).emit('receivePost', msg);
   });
 });
