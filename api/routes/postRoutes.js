@@ -10,6 +10,8 @@ const router = Router();
 // @route       POST api/post
 // @desc        Create new post
 // @access      Private
+
+// NOT USED END-POINT !!!
 router.post(
   "/",
   [

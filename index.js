@@ -33,6 +33,8 @@ const server = app.listen(process.env.PORT, (req, res) => {
 });
 
 // Socket.io
+const Post = require('./data/models/Post');
+
 const socketIo = io(server, {
   cors: {
     origins: [process.env.CLIENT_URL],
@@ -52,7 +54,19 @@ socketIo.on("connection", (socket) => {
   });
 
   // Send private post to your room
-  socket.on("sendPost", (familyId, msg) => {
-    socket.to(familyId).emit('receivePost', msg);
+  socket.on("sendPost", async (familyId, msg) => {
+    const { name, text } = msg;
+
+    try {
+      const post = new Post({ name, text, family: familyId });
+
+      await post.save();
+
+      socket.to(familyId).emit("receivePost", post);
+    } catch (error) {
+      console.log(error);
+
+      // TODO: add error message to user
+    }
   });
 });
