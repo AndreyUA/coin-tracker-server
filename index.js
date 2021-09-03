@@ -33,7 +33,7 @@ const server = app.listen(process.env.PORT, (req, res) => {
 });
 
 // Socket.io
-const Post = require('./data/models/Post');
+const Post = require("./data/models/Post");
 
 const socketIo = io(server, {
   cors: {
@@ -49,7 +49,7 @@ socketIo.on("connection", (socket) => {
   });
 
   // Join to family room
-  socket.on('join_family_channel', (roomId) => {
+  socket.on("join_family_channel", (roomId) => {
     socket.join(roomId);
   });
 
@@ -70,3 +70,6 @@ socketIo.on("connection", (socket) => {
     }
   });
 });
+
+// TODO: refactor it
+// with https://coderoad.ru/25119541/%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-socket-io-%D0%B2-%D1%81%D0%BE%D1%87%D0%B5%D1%82%D0%B0%D0%BD%D0%B8%D0%B8-%D1%81-express
