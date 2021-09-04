@@ -69,6 +69,10 @@ socketIo.on("connection", (socket) => {
       // TODO: add error message to user
     }
   });
+
+  socket.on("removePost", async (familyId, msgId) => {
+    socket.to(familyId).emit("receiveDeletedPost", msgId);
+  });
 });
 
 // TODO: refactor it

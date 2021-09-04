@@ -69,7 +69,7 @@ router.get("/all", authMiddleware, async (req, res) => {
   }
 });
 
-// @route       GET api/post/:id
+// @route       DELETE api/post/:id
 // @desc        Delete post by ID
 // @access      Private
 router.delete("/:id", authMiddleware, async (req, res) => {
@@ -85,7 +85,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
 
     await post.save();
 
-    res.json({ msg: "Post removed" });
+    res.json(post);
   } catch (error) {
     console.log(error);
 

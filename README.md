@@ -118,7 +118,7 @@ By default localy server is running on http://localhost:5000/.
     headers example:
     "x-auth-token": "someValidJWT"
 
-    response: array of posts objects.
+    response: deleted post object.
 
 ### /api/post/all (GET)
     get all posts;
