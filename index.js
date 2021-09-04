@@ -37,7 +37,7 @@ const Post = require("./data/models/Post");
 
 const socketIo = io(server, {
   cors: {
-    origins: [process.env.CLIENT_URL],
+    origins: ["*"],
   },
 });
 
