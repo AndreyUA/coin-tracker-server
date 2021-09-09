@@ -3,6 +3,7 @@ const loginRoutes = require("./loginRoutes");
 const budgetRoutes = require("./budgetRoutes");
 const familyRoutes = require("./familyRoutes");
 const postRoutes = require("./postRoutes");
+const todoRoutes = require("./todoRoutes");
 
 module.exports = (app) => {
   app.use("/api/register", registerRoutes);
@@ -10,4 +11,5 @@ module.exports = (app) => {
   app.use("/api/budget", budgetRoutes);
   app.use("/api/family", familyRoutes);
   app.use("/api/post", postRoutes);
+  app.use("/api/todo", todoRoutes);
 };
