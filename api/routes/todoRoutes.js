@@ -11,7 +11,6 @@ const router = Router();
 // @desc        Get all todo list
 // @access      Private
 
-
 // TODO: test it!
 router.get("/all", authMiddleware, async (req, res) => {
   try {
@@ -21,7 +20,7 @@ router.get("/all", authMiddleware, async (req, res) => {
       .filter((post) => post.family.toString() === req.family.id.toString())
       .sort(
         (todoA, todoB) =>
-          new Date(todoA.date).getTime() - new Date(todoB.date).getTime()
+          new Date(todoB.date).getTime() - new Date(todoA.date).getTime()
       )
       .filter((post) => !post.isRemoved);
 
@@ -35,5 +34,37 @@ router.get("/all", authMiddleware, async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+// @route       POST api/todo
+// @desc        Create new todo
+// @access      Private
+router.post(
+  "/",
+  [
+    check("content", "Text content is required").not().isEmpty(),
+    authMiddleware,
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { content } = req.body;
+
+    try {
+      const todo = new Todo({ content, family: req.family.id });
+
+      await todo.save();
+
+      res.json(todo);
+    } catch (error) {
+      console.log(error);
+
+      res.status(500).send("Server Error");
+    }
+  }
+);
 
 module.exports = router;

@@ -25,7 +25,7 @@ By default localy server is running on http://localhost:5000/.
     get account (family) information from DB;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     response: account object.
 
@@ -44,7 +44,7 @@ By default localy server is running on http://localhost:5000/.
     add new person for account (family);
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     json example:
     {
@@ -57,7 +57,7 @@ By default localy server is running on http://localhost:5000/.
     create new budger for you account (family);
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     json example:
     {
@@ -71,7 +71,7 @@ By default localy server is running on http://localhost:5000/.
     get all IDs of budgets for current family;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     response: array of budgets objects for current family with ID and NAME.
 
@@ -79,7 +79,7 @@ By default localy server is running on http://localhost:5000/.
     get budget by id;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     respose: budget object.
 
@@ -87,7 +87,7 @@ By default localy server is running on http://localhost:5000/.
     add transaction to budget;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     json example:
     {
@@ -102,7 +102,7 @@ By default localy server is running on http://localhost:5000/.
     add new post;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     json example:
     {
@@ -116,7 +116,7 @@ By default localy server is running on http://localhost:5000/.
     delete post;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     response: deleted post object.
 
@@ -124,8 +124,24 @@ By default localy server is running on http://localhost:5000/.
     get all posts;
 
     headers example:
-    "x-auth-token": "someValidJWT"
+    "Authorization": "Bearer someValidJWT"
 
     response: array of posts objects.
+
+### /api/todo/all (GET)
+    get all todo list;
+
+    headers example:
+    "Authorization": "Bearer someValidJWT"
+
+    response: array of todo objects.
+
+### /api/todo (POST)
+    add new todo;
+
+    headers example:
+    "Authorization": "Bearer someValidJWT"
+
+    response: todo objects.
 
 ### to be continued...
