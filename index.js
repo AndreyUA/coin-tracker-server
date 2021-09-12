@@ -34,6 +34,7 @@ const server = app.listen(process.env.PORT, (req, res) => {
 
 // Socket.io
 const Post = require("./data/models/Post");
+const Todo = require("./data/models/Todo");
 
 const socketIo = io(server, {
   cors: {
@@ -55,6 +56,7 @@ socketIo.on("connection", (socket) => {
 
   // Send private post to your room
   socket.on("sendPost", async (familyId, msg) => {
+    // TODO: validate name and text ---> not empty strings
     const { name, text } = msg;
 
     try {
@@ -72,6 +74,23 @@ socketIo.on("connection", (socket) => {
 
   socket.on("removePost", async (familyId, msgId) => {
     socket.to(familyId).emit("receiveDeletedPost", msgId);
+  });
+
+  socket.on("updateTodosList", async (familyId, todo) => {
+    // TODO: Validate content is not empty
+    const { content } = todo;
+
+    try {
+      const newTodo = new Todo({ content, family: familyId });
+
+      await newTodo.save();
+
+      socket.to(familyId).emit("updateTodos", newTodo);
+    } catch (error) {
+      console.log(error);
+
+      // TODO: add error message to user
+    }
   });
 });
 
