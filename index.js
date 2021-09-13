@@ -110,6 +110,24 @@ socketIo.on("connection", (socket) => {
       // TODO: add error message to user
     }
   });
+
+  socket.on("deleteTodoStatus", async (familyId, todoId) => {
+    // TODO: Validate todoId is not empty
+    try {
+    // TODO: Validate todo is exist
+    const todo = await Todo.findById(todoId);
+
+    todo.isRemoved = true,
+
+    await todo.save();
+
+    socket.to(familyId).emit("updateTodos", todo);
+    } catch (error) {
+      console.log(error);
+
+      // TODO: add error message to user
+    }
+  });
 });
 
 // TODO: refactor it
