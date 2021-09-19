@@ -125,8 +125,12 @@ socketIo.on("connection", (socket) => {
     }
   });
 
-  socket.on("createNewBudget", async (familyId, budgetName) => {
+  socket.on("createNewBudget", (familyId, budgetName) => {
     socket.to(familyId).emit("receivedNewBudget", budgetName);
+  });
+
+  socket.on("createNewTransaction", (familyId, budget) => {
+    socket.to(familyId).emit("receivedNewTransaction", budget);
   });
 });
 
