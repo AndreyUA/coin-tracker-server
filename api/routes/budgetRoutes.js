@@ -50,7 +50,7 @@ router.get("/all", authMiddleware, async (req, res) => {
     ).filter((budget) => budget.family.toString() === req.family.id.toString());
 
     if (!budgets || budgets.length === 0)
-      return res.status(404).json({ msg: "Bugets not found" });
+      return res.status(404).json({ errors: [{ msg: "Bugets not found" }] });
 
     const result = budgets.map((budget) => ({
       id: budget._id,
@@ -75,14 +75,15 @@ router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const budget = await Budget.findById(req.params.id);
 
-    if (!budget) return res.status(404).json({ msg: "Budget not found" });
+    if (!budget)
+      return res.status(404).json({ errors: [{ msg: "Buget not found" }] });
 
     res.send(budget);
   } catch (error) {
     console.log(error.message);
 
     if (error.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Budget not found" });
+      return res.status(404).json({ errors: [{ msg: "Buget not found" }] });
     }
 
     res.status(500).send("Server Error");
@@ -121,12 +122,15 @@ router.patch(
     try {
       const budget = await Budget.findById(req.params.id);
 
-      if (!budget) return res.status(404).json({ msg: "Budget not found" });
+      if (!budget)
+        return res.status(404).json({ errors: [{ msg: "Buget not found" }] });
 
       const family = await Family.findById(req.family.id).select("-password");
 
       if (family._id.toString() !== budget.family.toString())
-        return res.status(401).json({ msg: "Token is not valid" });
+        return res
+          .status(401)
+          .json({ errors: [{ msg: "Token is not valid" }] });
 
       if (family.persons.find((person) => person.name === name)) {
         budget.transactions.push({ person: name, money, purchase });
@@ -143,7 +147,7 @@ router.patch(
       console.log(error.message);
 
       if (error.kind === "ObjectId") {
-        return res.status(404).json({ msg: "Budget not found" });
+        return res.status(404).json({ errors: [{ msg: "Budget not found" }] });
       }
 
       res.status(500).send("Server Error");

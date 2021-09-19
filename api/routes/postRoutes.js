@@ -59,7 +59,7 @@ router.get("/all", authMiddleware, async (req, res) => {
       .filter((post) => !post.isRemoved);
 
     if (!posts || posts.length === 0)
-      return res.status(404).json({ msg: "Posts not found" });
+      return res.status(404).json({ errors: [{ msg: "Posts not found" }] });
 
     res.send(posts);
   } catch (error) {
@@ -76,10 +76,10 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
-    if (!post) return res.status(404).json({ msg: "Post not found" });
+    if (!post) return res.status(404).json({ errors: [{ msg: "Post not found" }] });
 
     if (post.family.toString() !== req.family.id.toString())
-      return res.status(401).json({ msg: "You are not authorized" });
+      return res.status(401).json({ errors: [{ msg: "You are not authorized" }] });
 
     post.isRemoved = true;
 
@@ -90,7 +90,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     console.log(error);
 
     if (error.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Post not found" });
+      return res.status(404).json({ errors: [{ msg: "Post not found" }] });
     }
 
     res.status(500).send("Server error");

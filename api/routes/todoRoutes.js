@@ -25,7 +25,7 @@ router.get("/all", authMiddleware, async (req, res) => {
       .filter((post) => !post.isRemoved);
 
     if (!todoList || todoList.length === 0)
-      return res.status(404).json({ msg: "Todos not found" });
+      return res.status(404).json({ errors: [{ msg: "Todos not found" }] });
 
     res.send(todoList);
   } catch (error) {
