@@ -96,14 +96,12 @@ socketIo.on("connection", (socket) => {
   socket.on("changeTodoStatus", async (familyId, todoId) => {
     // TODO: Validate todoId is not empty
     try {
-    // TODO: Validate todo is exist
-    const todo = await Todo.findById(todoId);
+      // TODO: Validate todo is exist
+      const todo = await Todo.findById(todoId);
 
-    todo.isFinished = !todo.isFinished,
+      (todo.isFinished = !todo.isFinished), await todo.save();
 
-    await todo.save();
-
-    socket.to(familyId).emit("updateTodos", todo);
+      socket.to(familyId).emit("updateTodos", todo);
     } catch (error) {
       console.log(error);
 
@@ -114,19 +112,21 @@ socketIo.on("connection", (socket) => {
   socket.on("deleteTodoStatus", async (familyId, todoId) => {
     // TODO: Validate todoId is not empty
     try {
-    // TODO: Validate todo is exist
-    const todo = await Todo.findById(todoId);
+      // TODO: Validate todo is exist
+      const todo = await Todo.findById(todoId);
 
-    todo.isRemoved = true,
+      (todo.isRemoved = true), await todo.save();
 
-    await todo.save();
-
-    socket.to(familyId).emit("updateTodos", todo);
+      socket.to(familyId).emit("updateTodos", todo);
     } catch (error) {
       console.log(error);
 
       // TODO: add error message to user
     }
+  });
+
+  socket.on("createNewBudget", async (familyId, budgetName) => {
+    socket.to(familyId).emit("receivedNewBudget", budgetName);
   });
 });
 
