@@ -46,4 +46,30 @@ router.patch(
   }
 );
 
+// @route       DELETE api/family
+// @desc        Add person to family
+// @access      Private
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const family = await Family.findById(req.family.id).select("-password");
+    const indexPerson = family.persons.findIndex(
+      (person) => JSON.stringify(person._id) === JSON.stringify(req.params.id)
+    );
+
+    if (+indexPerson === -1)
+      return res
+        .status(400)
+        .json({ errors: [{ msg: "This person is not exists" }] });
+
+    family.persons.splice(indexPerson, 1);
+
+    await family.save();
+
+    res.json(family);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

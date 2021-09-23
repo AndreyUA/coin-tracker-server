@@ -53,6 +53,19 @@ By default localy server is running on http://localhost:5000/.
 
     response: account object.
 
+### /api/family/:id (DELETE):
+    remove person from account (family);
+
+    headers example:
+    "Authorization": "Bearer someValidJWT"
+
+    json example:
+    {
+        "id": "idOfPerson"
+    }
+
+    response: account object.
+
 ### /api/budget (POST):
     create new budger for you account (family);
 
@@ -143,5 +156,3 @@ By default localy server is running on http://localhost:5000/.
     "Authorization": "Bearer someValidJWT"
 
     response: todo objects.
-
-### to be continued...
